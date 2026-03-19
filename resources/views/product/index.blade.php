@@ -75,10 +75,9 @@
                 <div class="pcard-wish" onclick="toggleWish(this)">♡</div>
                 <div class="pcard-img">
                     @if($p->image)
-                        <img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->name }}"
-                             onerror="this.src='https://placehold.co/300x300/141414/00ff87?text={{ urlencode(substr($p->name,0,10)) }}'">
+                        <img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->name }}" style="width:100%; height:auto; margin-bottom:10px;">
                     @else
-                        <img src="https://placehold.co/300x300/141414/00ff87?text={{ urlencode(substr($p->name,0,10)) }}" alt="{{ $p->name }}">
+                        <img src="https://cdn-icons-png.flaticon.com/512/428/428001.png" alt="{{ $p->name }}" style="width:100%; height:auto; margin-bottom:10px;">
                     @endif
                 </div>
                 <div class="pcard-body">
@@ -87,7 +86,7 @@
                     <div><span class="pcard-stars">★★★★★</span></div>
                     <div class="pcard-price"><sup>$</sup>{{ number_format($p->price, 2) }}</div>
                     <div style="margin-top:10px;">
-                        <span class="status-badge {{ $p->category_id == 'Disponible' ? 'available' : 'unavailable' }}">
+                        <span class="status-badge {{ $p->state == 'Disponible' ? 'available' : 'unavailable' }}">
                             {{ $p->category_id }}
                         </span>
                     </div>

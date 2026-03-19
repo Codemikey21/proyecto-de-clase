@@ -9,10 +9,8 @@ use App\Models\Category;
 class ProductController extends Controller
 {
     public function index(){
-        $productList = Product::limit(10)->orderBy('id', 'desc')->get();
-        return view('product.index', [
-            'misProductos' => $productList
-        ]);
+        $ProductList = Product::limit(20)->orderBy('id','desc')->get();
+        return view('product.index',['misProductos'=>$ProductList]);
     }
 
     public function create(){
@@ -23,18 +21,18 @@ class ProductController extends Controller
     }
 
     public function store(Request $request){
-        $newProduct = new Product();
-        $newProduct->name        = $request->get('nombre');
-        $newProduct->description = $request->input('descripcion');
-        $newProduct->price       = $request->input('precio');
-        $newProduct->category_id = $request->input('categoria');
+        $newproduct = new Product();
+        $newproduct->name        = $request->get('nombre');
+        $newproduct->description = $request->input('descripcion');
+        $newproduct->price       = $request->input('precio');
+        $newproduct->category_id = $request->input('categoria');
 
         if($request->hasFile('imagen')) {
-            $ruta = $request->file('imagen')->store('images', 'public');
-            $newProduct->image = $ruta;
+            $ruta = $request->file('imagen')->store('images','public');
+            $newproduct->image = $ruta;
         }
 
-        $newProduct->save();
+        $newproduct->save();
 
         return redirect()->route('product.index');
     }

@@ -63,11 +63,31 @@
                     <label>Descripción <span class="req">*</span></label>
                     <textarea name="descripcion"
                               class="fc @error('descripcion') err @enderror"
-                              rows="5"
+                              rows="4"
                               placeholder="Describe características, materiales, garantía..."
                               required>{{ old('descripcion') }}</textarea>
                     <div class="hint">Una buena descripción aumenta las ventas.</div>
                     @error('descripcion')<div class="hint err">{{ $message }}</div>@enderror
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-label">Imagen</div>
+                <div class="fg">
+                    <label>Imagen</label>
+                    <div class="upload-zone" id="uploadZone">
+                        <input type="file" id="imagen" name="imagen"
+                               accept="image/*"
+                               onchange="previewImg(this)">
+                        <div class="upload-ico">🖼️</div>
+                        <p><strong>Clic para subir</strong> o arrastra aquí</p>
+                        <small>PNG, JPG, WEBP — Máx. 5MB</small>
+                    </div>
+                    <div class="img-prev" id="imgPrev">
+                        <img id="prevImg" src="" alt="Preview">
+                        <div class="ok">✅ Imagen lista para subir</div>
+                    </div>
+                    @error('imagen')<div class="hint err">{{ $message }}</div>@enderror
                 </div>
             </div>
 
@@ -102,26 +122,6 @@
                         @error('precio')<div class="hint err">{{ $message }}</div>@enderror
                     </div>
 
-                </div>
-            </div>
-
-            <div class="form-section">
-                <div class="section-label">Imagen del Producto</div>
-                <div class="fg">
-                    <label>Imagen <span class="opt">(Opcional)</span></label>
-                    <div class="upload-zone" id="uploadZone">
-                        <input type="file" id="imagen" name="imagen"
-                               accept="image/*"
-                               onchange="previewImg(this)">
-                        <div class="upload-ico">🖼️</div>
-                        <p><strong>Clic para subir</strong> o arrastra aquí</p>
-                        <small>PNG, JPG, WEBP — Máx. 5MB</small>
-                    </div>
-                    <div class="img-prev" id="imgPrev">
-                        <img id="prevImg" src="" alt="Preview">
-                        <div class="ok">✅ Imagen lista para subir</div>
-                    </div>
-                    @error('imagen')<div class="hint err">{{ $message }}</div>@enderror
                 </div>
             </div>
 
