@@ -20,6 +20,15 @@ class ProductController extends Controller
         ]);
     }
 
+    public function show(){
+        return view('product.show');
+    }
+
+    public function destroy(Product $producto){
+        $producto->delete();
+        return redirect()->route('product.index');
+    }
+
     public function store(Request $request){
 
         $request->validate([
@@ -44,9 +53,5 @@ class ProductController extends Controller
         $newproduct->save();
 
         return redirect()->route('product.index');
-    }
-
-    public function show(){
-        return view('product.show');
     }
 }

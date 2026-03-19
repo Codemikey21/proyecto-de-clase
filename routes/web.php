@@ -14,4 +14,10 @@ Route::prefix('product')->controller(ProductController::class)->group(function()
 
     // RUTAS DINAMICAS - siempre se escriben al final
     Route::get('/{producto}', 'show');
+
+    // #borrar
+    Route::delete('/{producto}', 'destroy')->name('product.destroy');
+
+    // #url es para recibir datos desde post
+    Route::post('/store', 'store')->name('product.store');
 });

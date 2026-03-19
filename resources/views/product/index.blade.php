@@ -90,6 +90,16 @@
                             {{ $p->category_id }}
                         </span>
                     </div>
+
+                    {{-- BOTÓN ELIMINAR --}}
+                    <form action="{{ route('product.destroy', $p) }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" style="background:var(--accent2);border:none;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;color:#fff;cursor:pointer;margin-top:8px;width:100%;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+                            🗑️ Eliminar
+                        </button>
+                    </form>
+
                     <div class="pcard-del"><i class="fas fa-truck"></i> ✓ Envío gratis a Bucaramanga</div>
                 </div>
                 <div class="pcard-actions">
