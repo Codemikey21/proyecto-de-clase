@@ -70,29 +70,34 @@
             <a href="{{ route('product.create') }}">+ Publicar nuevo <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
         </div>
         <div class="products-grid">
-            @foreach($misProductos as $producto)
-            <div class="pcard" data-cat="{{ strtolower($producto->category->name ?? '') }}" data-price="{{ $producto->price }}" data-rating="5">
+            @foreach($misProductos as $p)
+            <div class="pcard" data-cat="{{ strtolower($p->category->name ?? '') }}" data-price="{{ $p->price }}" data-rating="5">
                 <div class="pcard-wish" onclick="toggleWish(this)">♡</div>
                 <div class="pcard-img">
-                    @if($producto->image)
-                        <img src="{{ asset('storage/' . $producto->image) }}" alt="{{ $producto->name }}"
-                             onerror="this.src='https://placehold.co/300x300/141414/00ff87?text={{ urlencode(substr($producto->name,0,10)) }}'">
+                    @if($p->image)
+                        <img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->name }}"
+                             onerror="this.src='https://placehold.co/300x300/141414/00ff87?text={{ urlencode(substr($p->name,0,10)) }}'">
                     @else
-                        <img src="https://placehold.co/300x300/141414/00ff87?text={{ urlencode(substr($producto->name,0,10)) }}" alt="{{ $producto->name }}">
+                        <img src="https://placehold.co/300x300/141414/00ff87?text={{ urlencode(substr($p->name,0,10)) }}" alt="{{ $p->name }}">
                     @endif
                 </div>
                 <div class="pcard-body">
-                    <span class="pcard-type">{{ $producto->category->name ?? 'Sin categoría' }}</span>
-                    <div class="pcard-name">{{ $producto->name }}</div>
+                    <span class="pcard-type">{{ $p->category->name ?? 'Sin categoría' }}</span>
+                    <div class="pcard-name">{{ $p->name }}</div>
                     <div><span class="pcard-stars">★★★★★</span></div>
-                    <div class="pcard-price"><sup>$</sup>{{ number_format($producto->price, 2) }}</div>
-                    <div class="pcard-del"><i class="fas fa-truck"></i> Entrega disponible</div>
+                    <div class="pcard-price"><sup>$</sup>{{ number_format($p->price, 2) }}</div>
+                    <div style="margin-top:10px;">
+                        <span class="status-badge {{ $p->category_id == 'Disponible' ? 'available' : 'unavailable' }}">
+                            {{ $p->category_id }}
+                        </span>
+                    </div>
+                    <div class="pcard-del"><i class="fas fa-truck"></i> ✓ Envío gratis a Bucaramanga</div>
                 </div>
                 <div class="pcard-actions">
-                    <button class="btn-cart" onclick="addToCart('{{ addslashes($producto->name) }}', {{ $producto->price }}, '{{ $producto->image ? asset('storage/'.$producto->image) : 'https://placehold.co/300x300/141414/00ff87?text=Producto' }}')">
+                    <button class="btn-cart" onclick="addToCart('{{ addslashes($p->name) }}', {{ $p->price }}, '{{ $p->image ? asset('storage/'.$p->image) : '' }}')">
                         🛒 Añadir
                     </button>
-                    <a href="{{ route('product.show', $producto->id) }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">
                         Ver más
                     </a>
                 </div>
@@ -102,7 +107,7 @@
     </div>
     @endif
 
-    {{-- SECCIÓN 1: MÁS VENDIDOS (fijos) --}}
+    {{-- SECCIÓN 1: MÁS VENDIDOS --}}
     <div class="p-section">
         <div class="p-section-hdr">
             <h2>🔥 Más Vendidos</h2>
@@ -125,7 +130,7 @@
                 </div>
                 <div class="pcard-actions">
                     <button class="btn-cart" onclick="addToCart('MacBook Air M2',999,'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-midnight-select-20220606?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1653084303665')">🛒 Añadir</button>
-                    <button class="btn-buy">Ver más</button>
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver más</a>
                 </div>
             </div>
 
@@ -146,7 +151,7 @@
                 </div>
                 <div class="pcard-actions">
                     <button class="btn-cart" onclick="addToCart('AirPods Pro 2',249,'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MQD83?wid=532&hei=582&fmt=jpeg&qlt=95&.v=1660803972361')">🛒 Añadir</button>
-                    <button class="btn-buy">Ver más</button>
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver más</a>
                 </div>
             </div>
 
@@ -167,7 +172,7 @@
                 </div>
                 <div class="pcard-actions">
                     <button class="btn-cart" onclick="addToCart('Samsung Galaxy S24',799,'https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-s921-sm-s921bzkdmea-539340459?$650_519_PNG$')">🛒 Añadir</button>
-                    <button class="btn-buy">Ver más</button>
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver más</a>
                 </div>
             </div>
 
@@ -185,7 +190,7 @@
                 </div>
                 <div class="pcard-actions">
                     <button class="btn-cart" onclick="addToCart('iPad Air M1',599,'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-air-select-wifi-blue-202203?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1645065732688')">🛒 Añadir</button>
-                    <button class="btn-buy">Ver más</button>
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver más</a>
                 </div>
             </div>
 
@@ -206,7 +211,7 @@
                 </div>
                 <div class="pcard-actions">
                     <button class="btn-cart" onclick="addToCart('Sony WH-1000XM5',279,'https://www.sony.com/image/5d02da5df552836db894cead8a68f5f3?fmt=png-alpha&wid=440')">🛒 Añadir</button>
-                    <button class="btn-buy">Ver más</button>
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver más</a>
                 </div>
             </div>
 
@@ -225,7 +230,7 @@
                 </div>
                 <div class="pcard-actions">
                     <button class="btn-cart" onclick="addToCart('Apple Watch S9',399,'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MQDY3ref_VW_34FR+watch-45-alum-midnight-nc-9s_VW_34FR_WF_CO+watch-face-45-nike-volt-splash-9s_VW_34FR?wid=750&hei=712&trim=1&fmt=p-jpg&qlt=95&.v=1693329384603')">🛒 Añadir</button>
-                    <button class="btn-buy">Ver más</button>
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver más</a>
                 </div>
             </div>
 
@@ -256,8 +261,8 @@
                     <div class="pcard-del"><i class="fas fa-truck"></i> Entrega en 3 días</div>
                 </div>
                 <div class="pcard-actions">
-                    <button class="btn-cart" onclick="addToCart('Dell XPS 13',849,'https://placehold.co/300x300/141414/00ff87?text=Dell+XPS')">🛒 Añadir</button>
-                    <button class="btn-buy">Ver más</button>
+                    <button class="btn-cart" onclick="addToCart('Dell XPS 13',849,'')">🛒 Añadir</button>
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver más</a>
                 </div>
             </div>
 
@@ -277,8 +282,8 @@
                     <div class="pcard-del"><i class="fas fa-truck"></i> Entrega en 2 días</div>
                 </div>
                 <div class="pcard-actions">
-                    <button class="btn-cart" onclick="addToCart('Samsung Tab S9',649,'https://images.samsung.com/is/image/samsung/p6pim/levant/2307/gallery/levant-galaxy-tab-s9-wifi-sm-x710nzaamea-thumb-537246798?$650_519_PNG$')">🛒 Añadir</button>
-                    <button class="btn-buy">Ver más</button>
+                    <button class="btn-cart" onclick="addToCart('Samsung Tab S9',649,'')">🛒 Añadir</button>
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver más</a>
                 </div>
             </div>
 
@@ -295,8 +300,8 @@
                     <div class="pcard-del"><i class="fas fa-truck"></i> Entrega en 2 días — Gratis</div>
                 </div>
                 <div class="pcard-actions">
-                    <button class="btn-cart" onclick="addToCart('Logitech MX Master 3S',79.99,'https://placehold.co/300x300/141414/00ff87?text=MX+Master')">🛒 Añadir</button>
-                    <button class="btn-buy">Ver más</button>
+                    <button class="btn-cart" onclick="addToCart('Logitech MX Master 3S',79.99,'')">🛒 Añadir</button>
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver más</a>
                 </div>
             </div>
 
@@ -314,8 +319,8 @@
                     <div class="pcard-del"><i class="fas fa-truck"></i> Entrega en 4 días — Gratis</div>
                 </div>
                 <div class="pcard-actions">
-                    <button class="btn-cart" onclick="addToCart('LG UltraWide 29&quot;',349,'https://placehold.co/300x300/141414/00ff87?text=LG+Monitor')">🛒 Añadir</button>
-                    <button class="btn-buy">Ver más</button>
+                    <button class="btn-cart" onclick="addToCart('LG UltraWide',349,'')">🛒 Añadir</button>
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver más</a>
                 </div>
             </div>
 
@@ -335,8 +340,8 @@
                     <div class="pcard-del"><i class="fas fa-truck"></i> Entrega en 2 días</div>
                 </div>
                 <div class="pcard-actions">
-                    <button class="btn-cart" onclick="addToCart('JBL Charge 5',129,'https://placehold.co/300x300/141414/00ff87?text=JBL+Charge')">🛒 Añadir</button>
-                    <button class="btn-buy">Ver más</button>
+                    <button class="btn-cart" onclick="addToCart('JBL Charge 5',129,'')">🛒 Añadir</button>
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver más</a>
                 </div>
             </div>
 
@@ -353,8 +358,8 @@
                     <div class="pcard-del"><i class="fas fa-truck"></i> Entrega mañana — Gratis</div>
                 </div>
                 <div class="pcard-actions">
-                    <button class="btn-cart" onclick="addToCart('Samsung Galaxy Watch 6',199,'https://images.samsung.com/is/image/samsung/p6pim/levant/2307/gallery/levant-galaxy-watch6-40mm-sm-r930nzkamea-thumb-537257797?$650_519_PNG$')">🛒 Añadir</button>
-                    <button class="btn-buy">Ver más</button>
+                    <button class="btn-cart" onclick="addToCart('Samsung Galaxy Watch 6',199,'')">🛒 Añadir</button>
+                    <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver más</a>
                 </div>
             </div>
 

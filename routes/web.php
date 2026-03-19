@@ -8,8 +8,12 @@ Route::get('/', HomeController::class);
 
 Route::prefix('product')->controller(ProductController::class)->group(function(){
     Route::get('/', 'index')->name('product.index');
-    Route::get('/create', 'create')->name('product.create');
-    Route::post('/store', 'store')->name('product.store');
+    Route::get('/create', 'create')->name('product.create');  // ← agrégale el name
     Route::get('/show', 'show')->name('product.show');
-});
 
+    // RUTAS DINAMICAS - siempre se escriben al final de las rutas estaticas
+    Route::get('/{producto}', 'show');
+
+    // url es para recibir datos desde post
+    Route::post('/store', 'store')->name('product.store');
+});

@@ -47,57 +47,61 @@
 
             <div class="form-section">
                 <div class="section-label">Información del Producto</div>
+
                 <div class="fg">
                     <label>Nombre del Producto <span class="req">*</span></label>
-                    <input type="text" name="name"
-                           class="fc @error('name') err @enderror"
-                           value="{{ old('name') }}"
+                    <input type="text" name="nombre"
+                           class="fc @error('nombre') err @enderror"
+                           value="{{ old('nombre') }}"
                            placeholder="Ej: MacBook Air M2 13 pulgadas"
                            maxlength="200" required>
                     <div class="hint">Sé descriptivo. Incluye características clave.</div>
-                    @error('name')<div class="hint err">{{ $message }}</div>@enderror
+                    @error('nombre')<div class="hint err">{{ $message }}</div>@enderror
                 </div>
+
                 <div class="fg">
                     <label>Descripción <span class="req">*</span></label>
-                    <textarea name="description"
-                              class="fc @error('description') err @enderror"
+                    <textarea name="descripcion"
+                              class="fc @error('descripcion') err @enderror"
                               rows="5"
                               placeholder="Describe características, materiales, garantía..."
-                              required>{{ old('description') }}</textarea>
+                              required>{{ old('descripcion') }}</textarea>
                     <div class="hint">Una buena descripción aumenta las ventas.</div>
-                    @error('description')<div class="hint err">{{ $message }}</div>@enderror
+                    @error('descripcion')<div class="hint err">{{ $message }}</div>@enderror
                 </div>
             </div>
 
             <div class="form-section">
                 <div class="section-label">Categoría y Precio</div>
                 <div class="form-row2">
+
                     <div class="fg">
                         <label>Categoría <span class="req">*</span></label>
-                        <select name="category_id"
-                                class="fc @error('category_id') err @enderror" required>
+                        <select id="categoria" name="categoria"
+                                class="fc @error('categoria') err @enderror" required>
                             <option value="" disabled selected>Selecciona una categoría...</option>
-                            @foreach($categoryList as $category)
-                                <option value="{{ $category->id }}"
-                                    @selected(old('category_id') == $category->id)>
-                                    {{ $category->name }}
+                            @foreach($categories as $c)
+                                <option value="{{ $c->id }}" @selected(old('categoria') == $c->id)>
+                                    {{ $c->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('category_id')<div class="hint err">{{ $message }}</div>@enderror
+                        @error('categoria')<div class="hint err">{{ $message }}</div>@enderror
                     </div>
+
                     <div class="fg">
                         <label>Precio <span class="req">*</span></label>
                         <div class="price-wrap">
                             <span class="price-sym">$</span>
-                            <input type="number" name="price"
-                                   class="fc @error('price') err @enderror"
-                                   value="{{ old('price') }}"
+                            <input type="number" name="precio"
+                                   class="fc @error('precio') err @enderror"
+                                   value="{{ old('precio') }}"
                                    placeholder="0.00" step="0.01" min="0" required>
                         </div>
                         <div class="hint">Precio en USD</div>
-                        @error('price')<div class="hint err">{{ $message }}</div>@enderror
+                        @error('precio')<div class="hint err">{{ $message }}</div>@enderror
                     </div>
+
                 </div>
             </div>
 
@@ -106,8 +110,8 @@
                 <div class="fg">
                     <label>Imagen <span class="opt">(Opcional)</span></label>
                     <div class="upload-zone" id="uploadZone">
-                        <input type="file" name="image"
-                               accept="image/jpeg,image/png,image/webp"
+                        <input type="file" id="imagen" name="imagen"
+                               accept="image/*"
                                onchange="previewImg(this)">
                         <div class="upload-ico">🖼️</div>
                         <p><strong>Clic para subir</strong> o arrastra aquí</p>
@@ -117,7 +121,7 @@
                         <img id="prevImg" src="" alt="Preview">
                         <div class="ok">✅ Imagen lista para subir</div>
                     </div>
-                    @error('image')<div class="hint err">{{ $message }}</div>@enderror
+                    @error('imagen')<div class="hint err">{{ $message }}</div>@enderror
                 </div>
             </div>
 

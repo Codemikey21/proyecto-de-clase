@@ -18,28 +18,28 @@ class ProductController extends Controller
     public function create(){
         $categoryList = Category::all();
         return view('product.create', [
-            'categoryList' => $categoryList
+            'categories' => $categoryList
         ]);
     }
 
     public function store(Request $request){
         $newProduct = new Product();
-        $newProduct->name = $request->get('name');
-        $newProduct->description = $request->get('description');
-        $newProduct->price = $request->get('price');
-        $newProduct->category_id = $request->get('category_id');
+        $newProduct->name        = $request->get('nombre');
+        $newProduct->description = $request->input('descripcion');
+        $newProduct->price       = $request->input('precio');
+        $newProduct->category_id = $request->input('categoria');
 
-        if($request->hasFile('image')) {
-            $ruta = $request->file('image')->store('images', 'public');
+        if($request->hasFile('imagen')) {
+            $ruta = $request->file('imagen')->store('images', 'public');
             $newProduct->image = $ruta;
         }
 
         $newProduct->save();
 
-        return redirect()->route('product.index')->with('success', 'Producto creado correctamente');
+        return redirect()->route('product.index');
     }
 
-   public function show(){
-    return view('product.show');
-}
+    public function show(){
+        return view('product.show');
+    }
 }
