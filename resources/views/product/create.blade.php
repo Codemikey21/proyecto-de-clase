@@ -54,27 +54,41 @@
                            class="fc @error('nombre') err @enderror"
                            value="{{ old('nombre') }}"
                            placeholder="Ej: MacBook Air M2 13 pulgadas"
-                           maxlength="200" required>
-                    <div class="hint">Sé descriptivo. Incluye características clave.</div>
-                    @error('nombre')<div class="hint err">{{ $message }}</div>@enderror
+                           maxlength="255">
+                    @error('nombre')
+                        <div style="color:red;margin-bottom:15px;">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="fg">
+                    <label>Precio <span class="req">*</span></label>
+                    <div class="price-wrap">
+                        <span class="price-sym">$</span>
+                        <input type="number" step="0.01" name="precio"
+                               class="fc @error('precio') err @enderror"
+                               value="{{ old('precio') }}"
+                               placeholder="0.00">
+                    </div>
+                    @error('nombre')
+                        <div style="color:red;margin-bottom:15px;">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="fg">
                     <label>Descripción <span class="req">*</span></label>
-                    <textarea name="descripcion"
+                    <textarea name="descripcion" rows="4"
                               class="fc @error('descripcion') err @enderror"
-                              rows="4"
-                              placeholder="Describe características, materiales, garantía..."
-                              required>{{ old('descripcion') }}</textarea>
-                    <div class="hint">Una buena descripción aumenta las ventas.</div>
-                    @error('descripcion')<div class="hint err">{{ $message }}</div>@enderror
+                              placeholder="Describe características, materiales, garantía...">{{ old('descripcion') }}</textarea>
+                    @error('descripcion')
+                        <div style="color:red;margin-bottom:15px;">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
             <div class="form-section">
                 <div class="section-label">Imagen</div>
                 <div class="fg">
-                    <label>Imagen</label>
+                    <label>Imagen <span class="req">*</span></label>
                     <div class="upload-zone" id="uploadZone">
                         <input type="file" id="imagen" name="imagen"
                                accept="image/*"
@@ -87,41 +101,28 @@
                         <img id="prevImg" src="" alt="Preview">
                         <div class="ok">✅ Imagen lista para subir</div>
                     </div>
-                    @error('imagen')<div class="hint err">{{ $message }}</div>@enderror
+                    @error('imagen')
+                        <div style="color:red;margin-bottom:15px;">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
             <div class="form-section">
-                <div class="section-label">Categoría y Precio</div>
-                <div class="form-row2">
-
-                    <div class="fg">
-                        <label>Categoría <span class="req">*</span></label>
-                        <select id="categoria" name="categoria"
-                                class="fc @error('categoria') err @enderror" required>
-                            <option value="" disabled selected>Selecciona una categoría...</option>
-                            @foreach($categories as $c)
-                                <option value="{{ $c->id }}" @selected(old('categoria') == $c->id)>
-                                    {{ $c->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('categoria')<div class="hint err">{{ $message }}</div>@enderror
-                    </div>
-
-                    <div class="fg">
-                        <label>Precio <span class="req">*</span></label>
-                        <div class="price-wrap">
-                            <span class="price-sym">$</span>
-                            <input type="number" name="precio"
-                                   class="fc @error('precio') err @enderror"
-                                   value="{{ old('precio') }}"
-                                   placeholder="0.00" step="0.01" min="0" required>
-                        </div>
-                        <div class="hint">Precio en USD</div>
-                        @error('precio')<div class="hint err">{{ $message }}</div>@enderror
-                    </div>
-
+                <div class="section-label">Categoría</div>
+                <div class="fg">
+                    <label>Categoría <span class="req">*</span></label>
+                    <select id="categoria" name="categoria"
+                            class="fc @error('categoria') err @enderror">
+                        <option value="" disabled selected>Selecciona una categoría...</option>
+                        @foreach($categories as $c)
+                            <option value="{{ $c->id }}" @selected(old('categoria') == $c->id)>
+                                {{ $c->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('categoria')
+                        <div style="color:red;margin-bottom:15px;">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
