@@ -85,27 +85,25 @@
                     <div class="pcard-name">{{ $p->name }}</div>
                     <div><span class="pcard-stars">★★★★★</span></div>
                     <div class="pcard-price"><sup>$</sup>{{ number_format($p->price, 2) }}</div>
-                    <div style="margin-top:10px;">
-                        <span class="status-badge {{ $p->state == 'Disponible' ? 'available' : 'unavailable' }}">
-                            {{ $p->category_id }}
-                        </span>
-                    </div>
+                    <div class="pcard-del"><i class="fas fa-truck"></i> ✓ Envío gratis a Bucaramanga</div>
 
                     {{-- BOTÓN ELIMINAR --}}
-                    <form action="{{ route('product.destroy', $p) }}" method="POST">
+                    <form action="{{ route('product.destroy', $p) }}" method="POST" style="margin-top:8px;">
                         @method('DELETE')
                         @csrf
-                        <button type="submit" style="background:var(--accent2);border:none;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;color:#fff;cursor:pointer;margin-top:8px;width:100%;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+                        <button type="submit" style="background:var(--accent2);border:none;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;color:#fff;cursor:pointer;width:100%;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
                             🗑️ Eliminar
                         </button>
                     </form>
-
-                    <div class="pcard-del"><i class="fas fa-truck"></i> ✓ Envío gratis a Bucaramanga</div>
                 </div>
+
                 <div class="pcard-actions">
-                    <button class="btn-cart" onclick="addToCart('{{ addslashes($p->name) }}', {{ $p->price }}, '{{ $p->image ? asset('storage/'.$p->image) : '' }}')">
-                        🛒 Añadir
-                    </button>
+                    {{-- CARRITO FUNCIONAL --}}
+                    <form action="{{ route('cart.store') }}" method="POST" style="flex:1;">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $p->id }}">
+                        <button type="submit" class="btn-cart" style="width:100%;">🛒 Añadir</button>
+                    </form>
                     <a href="{{ route('product.show') }}" class="btn-buy" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">
                         Ver más
                     </a>

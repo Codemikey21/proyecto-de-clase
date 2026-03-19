@@ -27,3 +27,12 @@ Route::prefix('product')->controller(ProductController::class)->group(function()
     Route::get('/{producto}', 'show');
     Route::delete('/{producto}', 'destroy')->name('product.destroy');
 });
+
+use App\Http\Controllers\CartController;
+
+Route::middleware('auth')->prefix('cart')->controller(CartController::class)->group(function(){
+    Route::get('/', 'index')->name('cart.index');
+    Route::post('/store', 'store')->name('cart.store');
+    Route::delete('/destroy/{item}', 'destroy')->name('cart.destroy');
+    Route::post('/clear', 'clear')->name('cart.clear');
+});
